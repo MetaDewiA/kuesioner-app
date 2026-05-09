@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kuesioner Skripsi — Persepsi Mahasiswa FTI UNSAP terhadap Uselessness Password</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#1A3557;--navy-l:#2A4F7A;--accent:#E8A020;--acc-s:#FDF3E0;
+  --green:#2D7D4F;--green-s:#E6F4EC;--red:#C0392B;--red-s:#FDECEA;
+  --white:#fff;--off:#F4F6FA;--border:#DDE3EC;
+  --text:#1A2332;--sub:#4A5568;--muted:#8898AA;
+  --shadow:0 2px 16px rgba(26,53,87,.09);--r:12px;
+  --fd:'DM Serif Display',serif;--fb:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--fb);background:var(--off);color:var(--text);min-height:100vh;}
+.app-header{background:var(--navy);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.15);}
+.hdr-inner{max-width:720px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.brand-tag{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:1px;text-transform:uppercase;}
+.brand-name{font-size:13px;font-weight:600;color:#fff;line-height:1.3;}
+.hdr-step{font-size:12px;color:rgba(255,255,255,.6);white-space:nowrap;}
+.prog-wrap{height:3px;background:rgba(255,255,255,.15);}
+.prog-fill{height:3px;background:var(--accent);transition:width .5s cubic-bezier(.4,0,.2,1);}
+.main{max-width:720px;margin:0 auto;padding:28px 16px 80px;}
+.step{display:none;}
+.step.active{display:block;animation:fs .3s ease;}
+@keyframes fs{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--white);border-radius:var(--r);padding:24px 28px;margin-bottom:16px;box-shadow:var(--shadow);border:1px solid var(--border);}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--navy);background:#E8EEF7;padding:3px 10px;border-radius:20px;margin-bottom:10px;letter-spacing:.4px;text-transform:uppercase;}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.step-title{font-family:var(--fd);font-size:24px;color:var(--navy);margin-bottom:6px;line-height:1.2;}
+.step-desc{font-size:13px;color:var(--sub);line-height:1.7;margin-bottom:20px;}
+.area-badge{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;margin-bottom:16px;letter-spacing:.3px;}
+.area-badge .wi{background:var(--accent);color:var(--navy);padding:2px 8px;border-radius:10px;font-size:11px;}
+.dim-block{margin-bottom:20px;}
+.dim-label{font-size:11px;font-weight:600;color:var(--navy);background:#EEF3FA;padding:6px 12px;border-radius:6px;margin-bottom:10px;border-left:3px solid var(--navy);display:inline-block;}
+.q-text{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:10px;}
+.q-code{font-weight:700;color:var(--navy);margin-right:4px;}
+.scale-row{display:flex;gap:6px;margin-bottom:4px;}
+.sc-opt{flex:1;text-align:center;cursor:pointer;}
+.sc-opt input{display:none;}
+.sc-btn{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px 8px;border:1.5px solid var(--border);border-radius:8px;background:var(--off);transition:all .15s;}
+.sc-btn:hover{border-color:var(--navy-l);background:#EEF3FA;}
+.sc-opt input:checked+.sc-btn{border-color:var(--navy);background:var(--navy);color:#fff;}
+.sc-num{font-size:18px;font-weight:700;color:var(--navy);transition:color .15s;}
+.sc-opt input:checked+.sc-btn .sc-num{color:#fff;}
+.sc-lbl{font-size:10px;color:var(--muted);text-align:center;line-height:1.3;}
+.sc-opt input:checked+.sc-btn .sc-lbl{color:rgba(255,255,255,.8);}
+.dim-divider{height:1px;background:var(--border);margin:18px 0;}
+.radio-group{display:flex;flex-direction:column;gap:7px;}
+.radio-opt{display:flex;align-items:center;gap:11px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:14px;transition:all .15s;}
+.radio-opt:hover{border-color:var(--navy-l);background:#F0F5FF;}
+.radio-opt.sel{border-color:var(--navy);background:#EEF3FA;color:var(--navy);font-weight:500;}
+.radio-opt input{display:none;}
+.r-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.radio-opt.sel .r-dot{border-color:var(--navy);background:var(--navy);}
+.radio-opt.sel .r-dot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+.note-box{background:var(--acc-s);border-radius:8px;padding:10px 14px;margin-bottom:14px;border-left:3px solid var(--accent);font-size:13px;color:#7C4A00;line-height:1.6;}
+.info-box{background:#EEF3FA;border-radius:8px;padding:12px 16px;margin-bottom:16px;border-left:3px solid var(--navy);font-size:13px;color:var(--sub);line-height:1.7;}
+.consent-box{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;background:#EEF3FA;border-radius:10px;border:1.5px solid var(--navy-l);cursor:pointer;margin-top:6px;}
+.consent-box input{display:none;}
+.cv{width:20px;height:20px;border:2px solid var(--navy);border-radius:5px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.consent-box.ck .cv{background:var(--navy);}
+.consent-box.ck .cv::after{content:'';width:5px;height:9px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg) translate(-1px,-1px);}
+.ct{font-size:13px;color:var(--navy);line-height:1.6;font-weight:500;}
+.hero{text-align:center;padding:16px 0 24px;}
+.hero-icon{width:68px;height:68px;background:#EEF3FA;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+.hero-title{font-family:var(--fd);font-size:22px;color:var(--navy);margin-bottom:10px;line-height:1.3;}
+.hero-sub{font-size:13px;color:var(--sub);line-height:1.7;margin-bottom:18px;}
+.hero-meta{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;}
+.meta-item{display:flex;flex-direction:column;align-items:center;}
+.mv{font-size:20px;font-weight:700;color:var(--navy);}
+.ml{font-size:11px;color:var(--muted);}
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:10px;}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:600;font-family:var(--fb);cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:var(--navy);color:#fff;}
+.btn-p:hover{background:var(--navy-l);transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,53,87,.25);}
+.btn-s{background:transparent;color:var(--sub);border:1.5px solid var(--border);}
+.btn-s:hover{border-color:var(--navy);color:var(--navy);}
+.btn-g{background:var(--green);color:#fff;}
+.btn-g:hover{background:#236040;transform:translateY(-1px);}
+.btn-lg{padding:13px 32px;font-size:15px;}
+.btn-load{position:relative;color:transparent!important;}
+.btn-load::after{content:'';position:absolute;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.field-err{font-size:12px;color:var(--red);margin-top:5px;display:none;}
+.field-err.show{display:block;}
+.success-wrap{text-align:center;padding:28px 16px;}
+.suc-icon{width:76px;height:76px;border-radius:50%;background:var(--green-s);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;animation:pop .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.suc-title{font-family:var(--fd);font-size:26px;color:var(--green);margin-bottom:10px;}
+.suc-sub{font-size:13px;color:var(--sub);line-height:1.7;margin-bottom:20px;}
+.res-code{display:inline-block;background:#F0F5FF;color:var(--navy);padding:7px 18px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid var(--border);margin-bottom:20px;}
+.form-grp{margin-bottom:18px;}
+.form-lbl{display:block;font-size:14px;font-weight:500;margin-bottom:9px;line-height:1.5;}
+.req{color:var(--red);margin-left:2px;}
+@media(max-width:600px){.card{padding:18px 16px;}.step-title{font-size:20px;}.sc-lbl{font-size:9px;}}
+</style>
+</head>
+<body>
+<header class="app-header">
+  <div class="hdr-inner">
+    <div><div class="brand-tag">FTI UNSAP · Penelitian Skripsi · 2026</div><div class="brand-name">Persepsi Mahasiswa terhadap Uselessness Password</div></div>
+    <span class="hdr-step" id="stepInd">Langkah 1 / 8</span>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+</header>
+<main class="main">
+
+<!-- STEP 0: LANDING -->
+<div class="step active" id="step-0">
+  <div class="card">
+    <div class="hero">
+      <div class="hero-icon"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1A3557" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1" fill="#1A3557"/></svg></div>
+      <div class="hero-title">Kuesioner Penelitian Skripsi</div>
+      <p class="hero-sub">Menganalisis persepsi mahasiswa FTI UNSAP terhadap <em>uselessness</em> password menggunakan metode <strong>MCDA</strong> dan <strong>Machine Learning</strong>.</p>
+      <div class="hero-meta">
+        <div class="meta-item"><span class="mv">21</span><span class="ml">Item pertanyaan</span></div>
+        <div class="meta-item"><span class="mv">5</span><span class="ml">Area MCDA</span></div>
+        <div class="meta-item"><span class="mv">±8</span><span class="ml">Menit</span></div>
+      </div>
+    </div>
+    <div class="info-box">Bacalah setiap pernyataan dengan cermat dan jawablah sesuai kondisi sebenarnya. Data bersifat <strong>anonim</strong> dan hanya digunakan untuk keperluan penelitian akademik.</div>
+    <div class="form-grp">
+      <label class="form-lbl">Pernyataan Persetujuan <span class="req">*</span></label>
+      <div class="consent-box" id="consentBox" onclick="toggleConsent()">
+        <div class="cv" id="cv"></div>
+        <span class="ct">Saya menyatakan bahwa saya adalah mahasiswa aktif Fakultas Teknologi Informasi UNSAP dan bersedia berpartisipasi dalam penelitian ini secara sukarela.</span>
+      </div>
+      <div class="field-err" id="err-consent">Anda harus menyetujui pernyataan di atas untuk melanjutkan.</div>
+    </div>
+  </div>
+  <div class="nav-row" style="justify-content:flex-end">
+    <button class="btn btn-p btn-lg" onclick="next(0)">Mulai Mengisi <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<!-- STEP 1: DEMOGRAFI -->
+<div class="step" id="step-1">
+  <div class="card">
+    <span class="chip"><span class="dot"></span>Bagian 1 dari 7</span>
+    <div class="step-title">Data Demografis</div>
+    <p class="step-desc">Pilih satu jawaban yang paling sesuai dengan kondisi Anda.</p>
+    <div class="form-grp" id="grp-D1">
+      <label class="form-lbl"><span class="q-code">D1.</span> Semester aktif Anda saat ini <span class="req">*</span></label>
+      <div class="radio-group">
+        <label class="radio-opt" onclick="selR(this,'D1','1-2')"><input type="radio" name="D1" value="1-2"/><div class="r-dot"></div>Semester 1 – 2</label>
+        <label class="radio-opt" onclick="selR(this,'D1','3-4')"><input type="radio" name="D1" value="3-4"/><div class="r-dot"></div>Semester 3 – 4</label>
+        <label class="radio-opt" onclick="selR(this,'D1','5-6')"><input type="radio" name="D1" value="5-6"/><div class="r-dot"></div>Semester 5 – 6</label>
+        <label class="radio-opt" onclick="selR(this,'D1','7-8')"><input type="radio" name="D1" value="7-8"/><div class="r-dot"></div>Semester 7 – 8</label>
+        <label class="radio-opt" onclick="selR(this,'D1','9+')"><input type="radio" name="D1" value="9+"/><div class="r-dot"></div>Semester 9 ke atas</label>
+      </div>
+      <div class="field-err" id="err-D1">Pilih salah satu jawaban.</div>
+    </div>
+    <div class="form-grp" id="grp-D2">
+      <label class="form-lbl"><span class="q-code">D2.</span> Peminatan / konsentrasi studi <span class="req">*</span></label>
+      <div class="radio-group">
+        <label class="radio-opt" onclick="selR(this,'D2','RPL')"><input type="radio" name="D2" value="RPL"/><div class="r-dot"></div>Rekayasa Perangkat Lunak</label>
+        <label class="radio-opt" onclick="selR(this,'D2','Keamanan Siber')"><input type="radio" name="D2" value="Keamanan Siber"/><div class="r-dot"></div>Jaringan &amp; Keamanan Siber</label>
+        <label class="radio-opt" onclick="selR(this,'D2','AI/DS')"><input type="radio" name="D2" value="AI/DS"/><div class="r-dot"></div>Kecerdasan Buatan / Data Science</label>
+        <label class="radio-opt" onclick="selR(this,'D2','SI')"><input type="radio" name="D2" value="SI"/><div class="r-dot"></div>Sistem Informasi</label>
+        <label class="radio-opt" onclick="selR(this,'D2','Lainnya')"><input type="radio" name="D2" value="Lainnya"/><div class="r-dot"></div>Lainnya</label>
+      </div>
+      <div class="field-err" id="err-D2">Pilih salah satu jawaban.</div>
+    </div>
+    <div class="form-grp" id="grp-D3">
+      <label class="form-lbl"><span class="q-code">D3.</span> Pernah mengambil mata kuliah Keamanan Siber / Kriptografi? <span class="req">*</span></label>
+      <div class="radio-group">
+        <label class="radio-opt" onclick="selR(this,'D3','Ya-lulus')"><input type="radio" name="D3" value="Ya-lulus"/><div class="r-dot"></div>Ya, sudah lulus</label>
+        <label class="radio-opt" onclick="selR(this,'D3','Sedang')"><input type="radio" name="D3" value="Sedang"/><div class="r-dot"></div>Sedang mengambil</label>
+        <label class="radio-opt" onclick="selR(this,'D3','Belum')"><input type="radio" name="D3" value="Belum"/><div class="r-dot"></div>Belum pernah</label>
+      </div>
+      <div class="field-err" id="err-D3">Pilih salah satu jawaban.</div>
+    </div>
+    <div class="form-grp" id="grp-D4">
+      <label class="form-lbl"><span class="q-code">D4.</span> Perangkat utama untuk mengakses SIAKAD <span class="req">*</span></label>
+      <div class="radio-group">
+        <label class="radio-opt" onclick="selR(this,'D4','Smartphone')"><input type="radio" name="D4" value="Smartphone"/><div class="r-dot"></div>Smartphone</label>
+        <label class="radio-opt" onclick="selR(this,'D4','Laptop/PC')"><input type="radio" name="D4" value="Laptop/PC"/><div class="r-dot"></div>Laptop / PC</label>
+        <label class="radio-opt" onclick="selR(this,'D4','Keduanya')"><input type="radio" name="D4" value="Keduanya"/><div class="r-dot"></div>Keduanya</label>
+      </div>
+      <div class="field-err" id="err-D4">Pilih salah satu jawaban.</div>
+    </div>
+    <div class="form-grp" id="grp-D5">
+      <label class="form-lbl"><span class="q-code">D5.</span> Perangkat Anda memiliki fitur biometrik (sidik jari / wajah)? <span class="req">*</span></label>
+      <div class="radio-group">
+        <label class="radio-opt" onclick="selR(this,'D5','Ada-aktif')"><input type="radio" name="D5" value="Ada-aktif"/><div class="r-dot"></div>Ya, dan aktif saya gunakan</label>
+        <label class="radio-opt" onclick="selR(this,'D5','Ada-jarang')"><input type="radio" name="D5" value="Ada-jarang"/><div class="r-dot"></div>Ya, tapi jarang / tidak saya gunakan</label>
+        <label class="radio-opt" onclick="selR(this,'D5','Tidak')"><input type="radio" name="D5" value="Tidak"/><div class="r-dot"></div>Tidak ada fitur biometrik</label>
+      </div>
+      <div class="field-err" id="err-D5">Pilih salah satu jawaban.</div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-s" onclick="prev(1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali</button>
+    <button class="btn btn-p" onclick="next(1)">Lanjut <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<!-- STEP 2: AREA REGULASI -->
+<div class="step" id="step-2">
+  <div class="card">
+    <span class="chip"><span class="dot"></span>Bagian 2 dari 7</span>
+    <div class="step-title">Area: Regulasi</div>
+    <p class="step-desc">Kebijakan keamanan akun dan regulasi yang berlaku di lingkungan kampus.</p>
+    <div class="area-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Area: Regulasi <span class="wi">wi = 0.10</span></div>
+    <div class="note-box">Pilih satu jawaban untuk setiap pernyataan di bawah ini.</div>
+    <div class="dim-block">
+      <div class="dim-label">Knowledge — Pengetahuan</div>
+      <div class="q-text"><span class="q-code">R_K.</span> Saya mengetahui bahwa terdapat kebijakan keamanan akun yang berlaku di lingkungan kampus (misalnya: aturan penggunaan SIAKAD).</div>
+      <div class="scale-row" id="scale-R_K">
+        <label class="sc-opt" onclick="selL('R_K',1)"><input type="radio" name="R_K" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('R_K',2)"><input type="radio" name="R_K" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kurang Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('R_K',3)"><input type="radio" name="R_K" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Tahu</span></div></label>
+      </div>
+      <div class="field-err" id="err-R_K">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Attitude — Sikap</div>
+      <div class="q-text"><span class="q-code">R_A.</span> Saya merasa kebijakan keamanan password yang ditetapkan kampus sudah tepat dan perlu dipatuhi oleh seluruh mahasiswa.</div>
+      <div class="scale-row" id="scale-R_A">
+        <label class="sc-opt" onclick="selL('R_A',1)"><input type="radio" name="R_A" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Setuju</span></div></label>
+        <label class="sc-opt" onclick="selL('R_A',2)"><input type="radio" name="R_A" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Ragu-ragu</span></div></label>
+        <label class="sc-opt" onclick="selL('R_A',3)"><input type="radio" name="R_A" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Setuju</span></div></label>
+      </div>
+      <div class="field-err" id="err-R_A">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Behaviour — Perilaku</div>
+      <div class="q-text"><span class="q-code">R_B.</span> Saya selalu mematuhi kebijakan keamanan akun yang berlaku di kampus, termasuk tidak berbagi kredensial login SIAKAD kepada orang lain.</div>
+      <div class="scale-row" id="scale-R_B">
+        <label class="sc-opt" onclick="selL('R_B',1)"><input type="radio" name="R_B" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Pernah</span></div></label>
+        <label class="sc-opt" onclick="selL('R_B',2)"><input type="radio" name="R_B" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kadang-kadang</span></div></label>
+        <label class="sc-opt" onclick="selL('R_B',3)"><input type="radio" name="R_B" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Selalu</span></div></label>
+      </div>
+      <div class="field-err" id="err-R_B">Pilih salah satu skala.</div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-s" onclick="prev(2)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali</button>
+    <button class="btn btn-p" onclick="next(2)">Lanjut <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<!-- STEP 3: AREA PASSWORD -->
+<div class="step" id="step-3">
+  <div class="card">
+    <span class="chip"><span class="dot"></span>Bagian 3 dari 7</span>
+    <div class="step-title">Area: Password</div>
+    <p class="step-desc">Perilaku dan persepsi terhadap ketidakbergunaan (<em>uselessness</em>) password konvensional.</p>
+    <div class="area-badge" style="background:#C0392B;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Area: Password <span class="wi" style="background:#fff;color:#C0392B">wi = 0.35</span></div>
+    <div class="note-box">Area ini memiliki bobot terbesar karena paling relevan dengan topik penelitian.</div>
+    <div class="dim-block">
+      <div class="dim-label">Knowledge — Pengetahuan</div>
+      <div class="q-text"><span class="q-code">PW_K.</span> Saya mengetahui karakteristik password yang kuat dan aman (minimal 8 karakter, kombinasi huruf besar, huruf kecil, angka, dan simbol).</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('PW_K',1)"><input type="radio" name="PW_K" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('PW_K',2)"><input type="radio" name="PW_K" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kurang Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('PW_K',3)"><input type="radio" name="PW_K" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Tahu</span></div></label>
+      </div>
+      <div class="field-err" id="err-PW_K">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Attitude — Sikap</div>
+      <div class="q-text"><span class="q-code">PW_A.</span> Saya menganggap penggunaan password konvensional sebagai metode autentikasi utama sudah tidak relevan dan tidak berguna (<em>useless</em>) di era teknologi saat ini.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('PW_A',1)"><input type="radio" name="PW_A" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Setuju</span></div></label>
+        <label class="sc-opt" onclick="selL('PW_A',2)"><input type="radio" name="PW_A" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Ragu-ragu</span></div></label>
+        <label class="sc-opt" onclick="selL('PW_A',3)"><input type="radio" name="PW_A" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Setuju</span></div></label>
+      </div>
+      <div class="field-err" id="err-PW_A">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Behaviour — Perilaku</div>
+      <div class="q-text"><span class="q-code">PW_B.</span> Saya menggunakan password yang berbeda untuk setiap akun digital saya (tidak melakukan <em>password reuse</em>) dan memperbarui password secara berkala.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('PW_B',1)"><input type="radio" name="PW_B" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Pernah</span></div></label>
+        <label class="sc-opt" onclick="selL('PW_B',2)"><input type="radio" name="PW_B" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kadang-kadang</span></div></label>
+        <label class="sc-opt" onclick="selL('PW_B',3)"><input type="radio" name="PW_B" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Selalu</span></div></label>
+      </div>
+      <div class="field-err" id="err-PW_B">Pilih salah satu skala.</div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-s" onclick="prev(3)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali</button>
+    <button class="btn btn-p" onclick="next(3)">Lanjut <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<!-- STEP 4: AREA BIOMETRIK -->
+<div class="step" id="step-4">
+  <div class="card">
+    <span class="chip"><span class="dot"></span>Bagian 4 dari 7</span>
+    <div class="step-title">Area: Biometrik</div>
+    <p class="step-desc">Preferensi dan kepercayaan terhadap autentikasi biometrik berbasis AI.</p>
+    <div class="area-badge" style="background:#1A3557;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2"/><path d="M12 8v4l3 3"/></svg> Area: Biometrik <span class="wi">wi = 0.25</span></div>
+    <div class="dim-block">
+      <div class="dim-label">Knowledge — Pengetahuan</div>
+      <div class="q-text"><span class="q-code">BIO_K.</span> Saya memahami cara kerja autentikasi biometrik (sidik jari / pengenalan wajah) dan perbedaan mendasarnya dengan metode password konvensional.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('BIO_K',1)"><input type="radio" name="BIO_K" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('BIO_K',2)"><input type="radio" name="BIO_K" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kurang Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('BIO_K',3)"><input type="radio" name="BIO_K" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Tahu</span></div></label>
+      </div>
+      <div class="field-err" id="err-BIO_K">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Attitude — Sikap</div>
+      <div class="q-text"><span class="q-code">BIO_A.</span> Saya lebih mempercayai dan lebih nyaman menggunakan autentikasi biometrik dibandingkan password dalam hal keamanan dan kemudahan akses.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('BIO_A',1)"><input type="radio" name="BIO_A" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Setuju</span></div></label>
+        <label class="sc-opt" onclick="selL('BIO_A',2)"><input type="radio" name="BIO_A" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Ragu-ragu</span></div></label>
+        <label class="sc-opt" onclick="selL('BIO_A',3)"><input type="radio" name="BIO_A" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Setuju</span></div></label>
+      </div>
+      <div class="field-err" id="err-BIO_A">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Behaviour — Perilaku</div>
+      <div class="q-text"><span class="q-code">BIO_B.</span> Saya secara aktif menggunakan fitur autentikasi biometrik (sidik jari / wajah) pada perangkat dan aplikasi yang mendukungnya dalam keseharian.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('BIO_B',1)"><input type="radio" name="BIO_B" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Pernah</span></div></label>
+        <label class="sc-opt" onclick="selL('BIO_B',2)"><input type="radio" name="BIO_B" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kadang-kadang</span></div></label>
+        <label class="sc-opt" onclick="selL('BIO_B',3)"><input type="radio" name="BIO_B" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Selalu</span></div></label>
+      </div>
+      <div class="field-err" id="err-BIO_B">Pilih salah satu skala.</div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-s" onclick="prev(4)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali</button>
+    <button class="btn btn-p" onclick="next(4)">Lanjut <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<!-- STEP 5: AREA PRIVASI -->
+<div class="step" id="step-5">
+  <div class="card">
+    <span class="chip"><span class="dot"></span>Bagian 5 dari 7</span>
+    <div class="step-title">Area: Privasi</div>
+    <p class="step-desc">Kesadaran terhadap risiko privasi data biometrik dan perlindungan data pribadi.</p>
+    <div class="area-badge" style="background:#0D7377;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Area: Privasi <span class="wi" style="background:#fff;color:#0D7377">wi = 0.20</span></div>
+    <div class="dim-block">
+      <div class="dim-label">Knowledge — Pengetahuan</div>
+      <div class="q-text"><span class="q-code">PRIV_K.</span> Saya mengetahui bahwa data biometrik (sidik jari / wajah) bersifat permanen dan tidak dapat diganti seperti password apabila terjadi kebocoran data.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('PRIV_K',1)"><input type="radio" name="PRIV_K" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('PRIV_K',2)"><input type="radio" name="PRIV_K" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kurang Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('PRIV_K',3)"><input type="radio" name="PRIV_K" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Tahu</span></div></label>
+      </div>
+      <div class="field-err" id="err-PRIV_K">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Attitude — Sikap</div>
+      <div class="q-text"><span class="q-code">PRIV_A.</span> Saya khawatir terhadap risiko penyalahgunaan data biometrik saya jika dikumpulkan oleh institusi kampus atau pihak ketiga tanpa pengawasan yang memadai.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('PRIV_A',1)"><input type="radio" name="PRIV_A" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Setuju</span></div></label>
+        <label class="sc-opt" onclick="selL('PRIV_A',2)"><input type="radio" name="PRIV_A" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Ragu-ragu</span></div></label>
+        <label class="sc-opt" onclick="selL('PRIV_A',3)"><input type="radio" name="PRIV_A" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Setuju</span></div></label>
+      </div>
+      <div class="field-err" id="err-PRIV_A">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Behaviour — Perilaku</div>
+      <div class="q-text"><span class="q-code">PRIV_B.</span> Saya berhati-hati dalam memberikan izin akses data biometrik kepada aplikasi atau sistem yang memintanya dan selalu memeriksa kebijakan privasi terlebih dahulu.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('PRIV_B',1)"><input type="radio" name="PRIV_B" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Pernah</span></div></label>
+        <label class="sc-opt" onclick="selL('PRIV_B',2)"><input type="radio" name="PRIV_B" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kadang-kadang</span></div></label>
+        <label class="sc-opt" onclick="selL('PRIV_B',3)"><input type="radio" name="PRIV_B" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Selalu</span></div></label>
+      </div>
+      <div class="field-err" id="err-PRIV_B">Pilih salah satu skala.</div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-s" onclick="prev(5)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali</button>
+    <button class="btn btn-p" onclick="next(5)">Lanjut <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<!-- STEP 6: AREA SERANGAN SIBER -->
+<div class="step" id="step-6">
+  <div class="card">
+    <span class="chip"><span class="dot"></span>Bagian 6 dari 7</span>
+    <div class="step-title">Area: Serangan Siber</div>
+    <p class="step-desc">Pengetahuan dan kewaspadaan terhadap ancaman serangan siber yang memanfaatkan kelemahan password.</p>
+    <div class="area-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Area: Serangan Siber <span class="wi">wi = 0.10</span></div>
+    <div class="dim-block">
+      <div class="dim-label">Knowledge — Pengetahuan</div>
+      <div class="q-text"><span class="q-code">SC_K.</span> Saya mengetahui jenis serangan siber yang memanfaatkan kelemahan password, seperti <em>Brute Force Attack</em> (menebak password secara sistematis) dan <em>Credential Stuffing</em> (menggunakan data bocor dari platform lain).</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('SC_K',1)"><input type="radio" name="SC_K" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('SC_K',2)"><input type="radio" name="SC_K" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kurang Tahu</span></div></label>
+        <label class="sc-opt" onclick="selL('SC_K',3)"><input type="radio" name="SC_K" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Tahu</span></div></label>
+      </div>
+      <div class="field-err" id="err-SC_K">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Attitude — Sikap</div>
+      <div class="q-text"><span class="q-code">SC_A.</span> Saya menganggap ancaman serangan siber terhadap akun digital adalah hal serius yang perlu diwaspadai, termasuk akun SIAKAD kampus.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('SC_A',1)"><input type="radio" name="SC_A" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Setuju</span></div></label>
+        <label class="sc-opt" onclick="selL('SC_A',2)"><input type="radio" name="SC_A" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Ragu-ragu</span></div></label>
+        <label class="sc-opt" onclick="selL('SC_A',3)"><input type="radio" name="SC_A" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Setuju</span></div></label>
+      </div>
+      <div class="field-err" id="err-SC_A">Pilih salah satu skala.</div>
+    </div>
+    <div class="dim-divider"></div>
+    <div class="dim-block">
+      <div class="dim-label">Behaviour — Perilaku</div>
+      <div class="q-text"><span class="q-code">SC_B.</span> Saya secara aktif memperbarui password dan mengaktifkan fitur keamanan tambahan (MFA / 2FA) untuk melindungi akun-akun penting saya dari potensi serangan siber.</div>
+      <div class="scale-row">
+        <label class="sc-opt" onclick="selL('SC_B',1)"><input type="radio" name="SC_B" value="1"/><div class="sc-btn"><span class="sc-num">1</span><span class="sc-lbl">Tidak Pernah</span></div></label>
+        <label class="sc-opt" onclick="selL('SC_B',2)"><input type="radio" name="SC_B" value="2"/><div class="sc-btn"><span class="sc-num">2</span><span class="sc-lbl">Kadang-kadang</span></div></label>
+        <label class="sc-opt" onclick="selL('SC_B',3)"><input type="radio" name="SC_B" value="3"/><div class="sc-btn"><span class="sc-num">3</span><span class="sc-lbl">Selalu</span></div></label>
+      </div>
+      <div class="field-err" id="err-SC_B">Pilih salah satu skala.</div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-s" onclick="prev(6)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali</button>
+    <button class="btn btn-p" onclick="next(6)">Lanjut <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+  </div>
+</div>
+
+<!-- STEP 7: CLASS LABEL -->
+<div class="step" id="step-7">
+  <div class="card">
+    <span class="chip"><span class="dot"></span>Bagian 7 dari 7 — Pertanyaan Terakhir</span>
+    <div class="step-title">Penilaian Keseluruhan</div>
+    <p class="step-desc">Pertanyaan ini digunakan sebagai <strong>variabel target (class label)</strong> pada model klasifikasi Machine Learning (C4.5 &amp; Naïve Bayes).</p>
+    <div class="form-grp" id="grp-CL1">
+      <label class="form-lbl"><span class="q-code">CL1.</span> Berdasarkan seluruh pengalaman dan pandangan Anda, bagaimana Anda menilai penggunaan password sebagai metode autentikasi utama pada sistem digital saat ini? <span class="req">*</span></label>
+      <div class="radio-group">
+        <label class="radio-opt" onclick="selR(this,'CL1','Password Useless')">
+          <input type="radio" name="CL1" value="Password Useless"/><div class="r-dot"></div>
+          <div><strong>Password sudah TIDAK BERGUNA</strong> — saya lebih percaya dan nyaman pada metode alternatif (biometrik / OTP).<div style="font-size:12px;color:var(--muted);margin-top:2px;">Kelas: Password Useless</div></div>
+        </label>
+        <label class="radio-opt" onclick="selR(this,'CL1','Masih Relevan')">
+          <input type="radio" name="CL1" value="Masih Relevan"/><div class="r-dot"></div>
+          <div><strong>Password MASIH RELEVAN</strong> — saya masih nyaman menggunakannya sebagai metode autentikasi utama.<div style="font-size:12px;color:var(--muted);margin-top:2px;">Kelas: Masih Relevan</div></div>
+        </label>
+        <label class="radio-opt" onclick="selR(this,'CL1','Ragu-ragu')">
+          <input type="radio" name="CL1" value="Ragu-ragu"/><div class="r-dot"></div>
+          <div><strong>RAGU-RAGU</strong> — password masih bisa digunakan tapi perlu dikombinasikan dengan MFA/2FA.<div style="font-size:12px;color:var(--muted);margin-top:2px;">Kelas: Ragu-ragu</div></div>
+        </label>
+      </div>
+      <div class="field-err" id="err-CL1">Pilih salah satu jawaban untuk melanjutkan.</div>
+    </div>
+  </div>
+  <div class="card" style="background:#EEF3FA;border-color:var(--navy);">
+    <p style="font-size:13px;color:var(--navy);line-height:1.7;">Terima kasih! Data Anda akan tersimpan secara anonim dan diolah menggunakan <strong>MCDA</strong> serta algoritma Machine Learning <strong>C4.5 &amp; Naïve Bayes</strong> untuk keperluan penelitian skripsi.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-s" onclick="prev(7)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Kembali</button>
+    <button class="btn btn-g btn-lg" id="submitBtn" onclick="submitForm()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+      Kirim Jawaban
+    </button>
+  </div>
+</div>
+
+<!-- STEP 8: SUCCESS -->
+<div class="step" id="step-8">
+  <div class="card">
+    <div class="success-wrap">
+      <div class="suc-icon"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#2D7D4F" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div class="suc-title">Jawaban Terkirim!</div>
+      <p class="suc-sub">Terima kasih atas partisipasi Anda. Data akan diolah menggunakan metode MCDA dan algoritma Machine Learning untuk keperluan penelitian skripsi.</p>
+      <div class="res-code" id="resCode">Kode Respons: #RES-????</div>
+      <p style="font-size:13px;color:var(--muted);">Meta Dewi Anggraeni · 220660121017 · Program Studi Informatika, FTI UNSAP · 2026</p>
+    </div>
+  </div>
+</div>
+
+</main>
+<script>
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwrE2A6afMn9BhTIkF0XnCm_RTHDRbxqO16XdO-XLfxOcKQ8e8gQpwype81OJmNocBAkg/exec';
+let curStep=0,consented=false;
+const LABELS=['Langkah 1 / 8','Langkah 2 / 8','Langkah 3 / 8','Langkah 4 / 8','Langkah 5 / 8','Langkah 6 / 8','Langkah 7 / 8','Langkah 8 / 8','Selesai'];
+function goTo(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  curStep=n;
+  const pct=n===0?0:Math.round((n/7)*100);
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('stepInd').textContent=LABELS[n]||'Selesai';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function next(from){if(validate(from))goTo(from+1);}
+function prev(from){goTo(from-1);}
+function toggleConsent(){
+  consented=!consented;
+  document.getElementById('consentBox').classList.toggle('ck',consented);
+}
+function selR(el,name){
+  document.querySelectorAll('[name="'+name+'"]').forEach(r=>r.closest('.radio-opt')?.classList.remove('sel'));
+  el.classList.add('sel');
+  el.querySelector('input').checked=true;
+  hideErr('err-'+name);
+}
+function selL(name,val){
+  document.querySelectorAll('[name="'+name+'"]').forEach(r=>r.checked=false);
+  const t=document.querySelector('input[name="'+name+'"][value="'+val+'"]');
+  if(t)t.checked=true;
+  hideErr('err-'+name);
+}
+function showErr(id){const e=document.getElementById(id);if(e)e.classList.add('show');}
+function hideErr(id){const e=document.getElementById(id);if(e)e.classList.remove('show');}
+function getR(name){const e=document.querySelector('input[name="'+name+'"]:checked');return e?e.value:'';}
+function validate(step){
+  let ok=true;
+  if(step===0){if(!consented){showErr('err-consent');ok=false;}else hideErr('err-consent');}
+  if(step===1){['D1','D2','D3','D4','D5'].forEach(q=>{if(!getR(q)){showErr('err-'+q);ok=false;}else hideErr('err-'+q);});}
+  if(step===2){['R_K','R_A','R_B'].forEach(q=>{if(!getR(q)){showErr('err-'+q);ok=false;}else hideErr('err-'+q);});}
+  if(step===3){['PW_K','PW_A','PW_B'].forEach(q=>{if(!getR(q)){showErr('err-'+q);ok=false;}else hideErr('err-'+q);});}
+  if(step===4){['BIO_K','BIO_A','BIO_B'].forEach(q=>{if(!getR(q)){showErr('err-'+q);ok=false;}else hideErr('err-'+q);});}
+  if(step===5){['PRIV_K','PRIV_A','PRIV_B'].forEach(q=>{if(!getR(q)){showErr('err-'+q);ok=false;}else hideErr('err-'+q);});}
+  if(step===6){['SC_K','SC_A','SC_B'].forEach(q=>{if(!getR(q)){showErr('err-'+q);ok=false;}else hideErr('err-'+q);});}
+  if(step===7){if(!getR('CL1')){showErr('err-CL1');ok=false;}else hideErr('err-CL1');}
+  if(!ok)window.scrollTo({top:0,behavior:'smooth'});
+  return ok;
+}
+function normPct(val){return((parseInt(val)||1)-1)/2*100;}
+async function submitForm(){
+  if(!validate(7))return;
+  const btn=document.getElementById('submitBtn');
+  btn.classList.add('btn-load');btn.disabled=true;
+  const g=getR;
+  const areas={
+    Regulasi:{K:g('R_K'),A:g('R_A'),B:g('R_B'),wi:0.10},
+    Password:{K:g('PW_K'),A:g('PW_A'),B:g('PW_B'),wi:0.35},
+    Biometrik:{K:g('BIO_K'),A:g('BIO_A'),B:g('BIO_B'),wi:0.25},
+    Privasi:{K:g('PRIV_K'),A:g('PRIV_A'),B:g('PRIV_B'),wi:0.20},
+    SeranganSiber:{K:g('SC_K'),A:g('SC_A'),B:g('SC_B'),wi:0.10}
+  };
+  const dimW={K:0.30,A:0.20,B:0.50};
+  let vK=0,vA=0,vB=0;
+  for(const a of Object.values(areas)){
+    vK+=normPct(a.K)*a.wi;
+    vA+=normPct(a.A)*a.wi;
+    vB+=normPct(a.B)*a.wi;
+  }
+  const vTotal=vK*dimW.K+vA*dimW.A+vB*dimW.B;
+  const level=vTotal>=80?'Baik':vTotal>=60?'Sedang':'Buruk';
+  const resCode='RES-'+Date.now().toString(36).toUpperCase();
+  const data={
+    timestamp:new Date().toISOString(),responseCode:resCode,
+    D1:g('D1'),D2:g('D2'),D3:g('D3'),D4:g('D4'),D5:g('D5'),
+    R_K:g('R_K'),R_A:g('R_A'),R_B:g('R_B'),
+    PW_K:g('PW_K'),PW_A:g('PW_A'),PW_B:g('PW_B'),
+    BIO_K:g('BIO_K'),BIO_A:g('BIO_A'),BIO_B:g('BIO_B'),
+    PRIV_K:g('PRIV_K'),PRIV_A:g('PRIV_A'),PRIV_B:g('PRIV_B'),
+    SC_K:g('SC_K'),SC_A:g('SC_A'),SC_B:g('SC_B'),
+    CL1:g('CL1'),
+    MCDA_vK:vK.toFixed(2),MCDA_vA:vA.toFixed(2),MCDA_vB:vB.toFixed(2),
+    MCDA_vTotal:vTotal.toFixed(2),MCDA_Level:level
+  };
+  try{
+    await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  }catch(e){console.log('Submitted (no-cors):',e.message);}
+  document.getElementById('resCode').textContent='Kode Respons: #'+resCode;
+  goTo(8);
+}
+</script>
+</body>
+</html>
